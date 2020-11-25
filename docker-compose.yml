@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - type: bind
+        source: /home/azureuser/db
+        target: /code/db
+    ports:
+      - "80:8000"
+    networks:
+      - gameopedia
+
+networks:
+  gameopedia:
+
+
