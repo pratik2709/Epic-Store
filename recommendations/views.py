@@ -6,17 +6,22 @@ from django.shortcuts import render
 # write unoptimized query which returns data abased on age and attributes
 
 # create a login API for a user
-from rest_framework import viewsets, permissions, authentication
+from rest_framework import viewsets, permissions, authentication, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from recommendations.models import Profile
-from recommendations.serializers import ProfileSerializer
+from recommendations.models import Profile, Games
+from recommendations.serializers import ProfileSerializer, GamesSerializer
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class GamesViewSet(viewsets.ModelViewSet):
+    queryset = Games.objects.all()
+    serializer_class = GamesSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
@@ -25,5 +30,9 @@ class RecommendationList(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        usernames = [user.username for user in User.objects.all()]
-        return Response(usernames)
+        # get the profile
+        # get the games according to the users according to age and then filter by genere, theme and violence
+        user_object = request.user
+        profile = Profile.objects.get(user=user_object)
+        games = Games.objects.get()
+        return Response(profile.age)

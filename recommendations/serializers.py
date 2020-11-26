@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from recommendations.models import Profile
+from recommendations.models import Profile, Games
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,3 +15,8 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Profile
         fields = ['user', 'age', 'preferences']
+
+class GamesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Games
+        fields = ['name', 'age_group', 'theme', 'genre', 'violence']

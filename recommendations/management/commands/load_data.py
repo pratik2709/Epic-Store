@@ -54,21 +54,21 @@ class Command(BaseCommand):
 
         for e in user_sheet.T.to_dict().values():
             result = dict()
-            result['preferences'] = {}
+            result = {}
             val = "Doesn't Matter"
             val = val.lower()
-            result['preferences']['theme'] = [x.strip() for x in e['Game Category: Theme'].split(',')]
-            result['preferences']['theme'] = [value for value in result['preferences']['theme'] if value.lower() != val]
+            result['theme'] = [x.strip() for x in e['Game Category: Theme'].split(',')]
+            result['theme'] = [value for value in result['theme'] if value.lower() != val]
 
-            # result['preferences']['theme'] = ["Absent" if value == "None" else value for value in result['preferences']['theme']]
+            # result['theme'] = ["Absent" if value == "None" else value for value in result['theme']]
 
-            result['preferences']['genre'] = [x.strip() for x in e['Game Category: Genres'].split(',')]
-            result['preferences']['genre'] = [value for value in result['preferences']['genre'] if value.lower() != val]
-            # result['preferences']['genre'] = ["Absent" if value == "None" else value for value in result['preferences']['genre']]
+            result['genre'] = [x.strip() for x in e['Game Category: Genres'].split(',')]
+            result['genre'] = [value for value in result['genre'] if value.lower() != val]
+            # result['genre'] = ["Absent" if value == "None" else value for value in result['genre']]
 
-            result['preferences']['violence'] = [x.strip() for x in e['Game Category: Violence'].split(',')]
-            result['preferences']['violence'] = [value for value in result['preferences']['violence'] if value.lower() != val]
-            # result['preferences']['violence'] = ["Absent" if value == "None" else value for value in result['preferences']['violence']]
+            result['violence'] = [x.strip() for x in e['Game Category: Violence'].split(',')]
+            result['violence'] = [value for value in result['violence'] if value.lower() != val]
+            # result['violence'] = ["Absent" if value == "None" else value for value in result['violence']]
 
             print(result)
             user = User.objects.create_user(username=e['Name'],
