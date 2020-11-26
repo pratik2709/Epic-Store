@@ -58,16 +58,18 @@ class Command(BaseCommand):
             result = dict()
             result['preferences'] = {}
             val = "Doesn't Matter"
-            result['preferences']['theme'] = e['Game Category: Theme'].split(",")
-            result['preferences']['theme'] = [value for value in result['preferences']['theme'] if value != val]
+            val = val.lower()
+            result['preferences']['theme'] = [x.strip() for x in e['Game Category: Theme'].split(',')]
+            result['preferences']['theme'] = [value for value in result['preferences']['theme'] if value.lower() != val]
+
             # result['preferences']['theme'] = ["Absent" if value == "None" else value for value in result['preferences']['theme']]
 
-            result['preferences']['genre'] = e['Game Category: Genres'].split(",")
-            result['preferences']['genre'] = [value for value in result['preferences']['genre'] if value != val]
+            result['preferences']['genre'] = [x.strip() for x in e['Game Category: Genres'].split(',')]
+            result['preferences']['genre'] = [value for value in result['preferences']['genre'] if value.lower() != val]
             # result['preferences']['genre'] = ["Absent" if value == "None" else value for value in result['preferences']['genre']]
 
-            result['preferences']['violence'] = e['Game Category: Violence'].split(",")
-            result['preferences']['violence'] = [value for value in result['preferences']['violence'] if value != val]
+            result['preferences']['violence'] = [x.strip() for x in e['Game Category: Violence'].split(',')]
+            result['preferences']['violence'] = [value for value in result['preferences']['violence'] if value.lower() != val]
             # result['preferences']['violence'] = ["Absent" if value == "None" else value for value in result['preferences']['violence']]
 
             print(result)
