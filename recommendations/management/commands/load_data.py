@@ -3,9 +3,7 @@ from collections import defaultdict
 import numpy
 import pandas as pd
 from django.contrib.auth.models import User
-from django.core import management
 from django.core.management import BaseCommand
-from numpy import nan, NaN
 
 from recommendations.models import Games, Attributes, Profile
 
