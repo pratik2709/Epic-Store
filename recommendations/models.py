@@ -18,7 +18,8 @@ class Games(BaseFields):
     cover_url = models.CharField(max_length=200)
     age_group = models.IntegerField()
     theme = models.CharField(max_length=200)
-    violence = models.CharField(max_length=200)
+    genre = models.CharField(max_length=200)
+    violence = models.CharField(max_length=200, null=True)
 
 class Attributes(BaseFields):
     attributes = models.JSONField()
