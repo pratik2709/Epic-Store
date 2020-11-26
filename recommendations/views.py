@@ -2,6 +2,7 @@ import itertools
 
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -33,9 +34,6 @@ class RecommendationList(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        # get the profile
-        # get the games according to the users according to age
-        # and then filter by genere, theme and violence
         user_object = request.user
         profile = Profile.objects.get(user=user_object)
         profile_preferences = profile.preferences
@@ -48,5 +46,4 @@ class RecommendationList(APIView):
         for theme, genre in combinations:
             query = query | Q(theme=theme, genre=genre)
         res = games_by_age_and_violence.filter(query)
-        print(res)
-        return Response(res)
+        return Response(res.values('name', 'age_group'))
