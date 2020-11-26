@@ -25,7 +25,6 @@ class Command(BaseCommand):
         self.add_attributes(attribute_sheet)
         self.add_users(user_sheet)
 
-
     def add_games(self, game_sheet):
         Games.objects.all().delete()
         for e in game_sheet.T.to_dict().values():
@@ -58,9 +57,19 @@ class Command(BaseCommand):
         for e in user_sheet.T.to_dict().values():
             result = dict()
             result['preferences'] = {}
+            val = "Doesn't Matter"
             result['preferences']['theme'] = e['Game Category: Theme'].split(",")
+            result['preferences']['theme'] = [value for value in result['preferences']['theme'] if value != val]
+            # result['preferences']['theme'] = ["Absent" if value == "None" else value for value in result['preferences']['theme']]
+
             result['preferences']['genre'] = e['Game Category: Genres'].split(",")
+            result['preferences']['genre'] = [value for value in result['preferences']['genre'] if value != val]
+            # result['preferences']['genre'] = ["Absent" if value == "None" else value for value in result['preferences']['genre']]
+
             result['preferences']['violence'] = e['Game Category: Violence'].split(",")
+            result['preferences']['violence'] = [value for value in result['preferences']['violence'] if value != val]
+            # result['preferences']['violence'] = ["Absent" if value == "None" else value for value in result['preferences']['violence']]
+
             print(result)
             user = User.objects.create_user(username=e['Name'],
                                             email=e['Name'].lower() + '@estore.com',
