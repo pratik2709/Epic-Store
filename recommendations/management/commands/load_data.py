@@ -72,6 +72,7 @@ class Command(BaseCommand):
 
             print(result)
             user = User.objects.create_user(username=e['Name'],
+                                            first_name=e['Name'],
                                             email=e['Name'].lower() + '@estore.com',
                                             password='password')
             Profile.objects.create(user=user,
