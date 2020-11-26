@@ -1,4 +1,5 @@
 import itertools
+import json
 
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -46,4 +47,5 @@ class RecommendationList(APIView):
         for theme, genre in combinations:
             query = query | Q(theme=theme, genre=genre)
         res = games_by_age_and_violence.filter(query)
-        return JsonResponse(res.values('name', 'age_group'))
+        # return Response(res.values('name', 'age_group'))
+        return JsonResponse(list(res.values('name')), safe=False)

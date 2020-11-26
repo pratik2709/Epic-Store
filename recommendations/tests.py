@@ -30,13 +30,13 @@ class CreateNewPuppyTest(APITestCase):
 
     def test_recommendations(self):
         factory = APIRequestFactory()
-        user = User.objects.get(first_name='Adrian')
-        view = RecommendationList.as_view()
-        request = factory.get('/api/recommend/')
-        force_authenticate(request, user=user)
-        response = view(request)
-        # response_dict = json.loads(response.content)
-        print(dir(response))
+        users = User.objects.all()
+        for user in users:
+            view = RecommendationList.as_view()
+            request = factory.get('/api/recommend/', content_type='application/json')
+            force_authenticate(request, user=user)
+            response = view(request)
+            print(user.first_name, json.loads(response.content))
 
 
 def add_games(game_sheet):
