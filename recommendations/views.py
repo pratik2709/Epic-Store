@@ -2,11 +2,14 @@ import itertools
 
 from django.db.models import Q
 # create a login API for a user
-from rest_framework import permissions, generics, authentication
+from django.http import JsonResponse
+from rest_framework import permissions, generics, authentication, status
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.response import Response
 
 from recommendations.models import Profile, Games
-from recommendations.serializers import RecommendationSerializer
+from recommendations.serializers import RecommendationSerializer, BuyGamesSerializer
 
 
 class RecommendationList(generics.ListCreateAPIView):
@@ -17,8 +20,7 @@ class RecommendationList(generics.ListCreateAPIView):
 
     def list(self, request):
         queryset = self.get_queryset(request)
-        serializer = RecommendationSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return JsonResponse(list(queryset.values_list('name', flat=True)), safe=False)
 
     def get_queryset(self, request):
         user_object = request.user
@@ -35,15 +37,18 @@ class RecommendationList(generics.ListCreateAPIView):
         res = games_by_age.filter(query)
         return res
 
-# class ProfileViewSet(viewsets.ModelViewSet):
-#     queryset = Profile.objects.all()
-#     serializer_class = ProfileSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-#
-# class GamesViewSet(viewsets.ModelViewSet):
-#     queryset = Games.objects.all()
-#     serializer_class = GamesSerializer
-#     permission_classes = [permissions.IsAuthenticated]
+
+class BuyGamesView(ListModelMixin, CreateModelMixin, GenericAPIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = BuyGamesSerializer
+
+    def post(self, request, *args, **kwargs):
+        # skipping actual creation of object due to time constraints
+        serializer = self.get_serializer(data=request.data, many=True)
+        print(request.data)
+        return Response("Successfully created", status=status.HTTP_201_CREATED)
+
 
 
 

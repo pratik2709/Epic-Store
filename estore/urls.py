@@ -37,8 +37,7 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-# router.register(r'users', views.ProfileViewSet)
-# router.register(r'games', views.GamesViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
