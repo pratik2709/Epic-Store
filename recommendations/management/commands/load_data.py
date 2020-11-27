@@ -1,7 +1,7 @@
 import pandas as pd
 from django.core.management import BaseCommand
 
-from recommendations.utils import Utility
+from recommendations.utils import DataLoadingCleaningUtils
 
 
 class Command(BaseCommand):
@@ -14,7 +14,7 @@ class Command(BaseCommand):
         game_sheet = pd.read_excel(xls, 'Games')
         user_sheet = pd.read_excel(xls, 'Users')
         attribute_sheet = pd.read_excel(xls, 'Attributes')
-        util = Utility()
+        util = DataLoadingCleaningUtils()
         util.add_games(game_sheet)
         util.add_attributes(attribute_sheet)
         util.add_users(user_sheet)

@@ -4,11 +4,11 @@ import pandas as pd
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIRequestFactory, force_authenticate
 
-from recommendations.utils import Utility
+from recommendations.utils import DataLoadingCleaningUtils
 from recommendations.views import RecommendationList
 
 
-class CreateNewPuppyTest(APITestCase):
+class RecommendationsTest(APITestCase):
 
     def setUp(self):
         self.game_results = {
@@ -30,7 +30,7 @@ class CreateNewPuppyTest(APITestCase):
         game_sheet = pd.read_excel(xls, 'Games')
         user_sheet = pd.read_excel(xls, 'Users')
         attribute_sheet = pd.read_excel(xls, 'Attributes')
-        util = Utility()
+        util = DataLoadingCleaningUtils()
         util.add_games(game_sheet)
         util.add_attributes(attribute_sheet)
         util.add_users(user_sheet)
@@ -44,8 +44,6 @@ class CreateNewPuppyTest(APITestCase):
             force_authenticate(request, user=user)
             response = view(request)
             result = json.loads(response.content)
-            result.sort()
-            self.game_results[user.first_name].sort()
             res = self.checkEqual(result, self.game_results[user.first_name])
             self.assertTrue(res)
 

@@ -5,7 +5,7 @@ import pandas as pd
 
 from recommendations.models import Games, Attributes, Profile
 
-class Utility:
+class DataLoadingCleaningUtils:
 
     def add_games(self, game_sheet):
         Games.objects.all().delete()
