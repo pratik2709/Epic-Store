@@ -42,7 +42,7 @@ and avoid JOINS by using separate queries
 the recommended games according to the user preferences
 * Buy Game API: This is a dummy API for demonstrating a POST Request
 * Maker-Breaker Game API: have not attempted 
-this as per the discussion with Madhusudan 
+this as per the discussion
 (can implement once I have a better understanding)
 
 ## Security
@@ -64,11 +64,12 @@ this as per the discussion with Madhusudan
 ```
 * Explore the APIs!
 
-## Docker
+## Deployment
 * There are 2 separate docker containers: 
 one for database and other for the app
 * Another one can be added in future for nginx (as a reverse proxy) 
 in case the app needs to be deployed
+
 
 ## User-Interface
 * Was not able to add the user interface due to the time constraints
