@@ -8,6 +8,7 @@ docker-compose build
 * Run all database migrations with:
 ```
 sudo docker-compose run web python manage.py makemigrations
+sudo docker-compose run web python manage.py migrate
 ```
 * Once the containers are created, 
 data can be loaded with the following command:

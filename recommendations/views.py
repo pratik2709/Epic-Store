@@ -42,6 +42,7 @@ class BuyGamesView(ListModelMixin, CreateModelMixin, GenericAPIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = BuyGamesSerializer
+    queryset = Profile.objects.all()
 
     def post(self, request, *args, **kwargs):
         # skipping actual creation of object due to time constraints
