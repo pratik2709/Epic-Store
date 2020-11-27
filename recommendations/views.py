@@ -1,7 +1,6 @@
 import itertools
 
 from django.db.models import Q
-# create a login API for a user
 from django.http import JsonResponse
 from rest_framework import permissions, generics, authentication, status
 from rest_framework.generics import GenericAPIView
