@@ -55,7 +55,10 @@ this as per the discussion with Madhusudan
   "password": "password"
 }
 ```
-* click authorize and enter the value: 'Token <your-key>'
+* click authorize on top right hand corner of the page and enter the value: 
+```
+'Token <your-key>'
+```
 * Explore the APIs!
 
 ## Docker
