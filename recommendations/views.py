@@ -37,10 +37,10 @@ class RecommendationList(APIView):
         profile_violence = profile_preferences.get('violence')
         profile_genres = profile_preferences.get('genre')
         profile_themes = profile_preferences.get('theme')
-        games_by_age_and_violence = Games.objects.filter(age_group__lte=profile.age)
+        games_by_age = Games.objects.filter(age_group__lte=profile.age)
         combinations = list(itertools.product(profile_themes, profile_genres, profile_violence))
         query = Q()
         for theme, genre, violence in combinations:
             query = query | Q(theme=theme, genre=genre, violence=violence)
-        res = games_by_age_and_violence.filter(query)
+        res = games_by_age.filter(query)
         return JsonResponse(list(res.values_list('name', flat=True)), safe=False)
