@@ -20,3 +20,8 @@ class GamesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Games
         fields = ['name', 'age_group', 'theme', 'genre', 'violence']
+
+
+class RecommendationSerializer(serializers.Serializer):
+    name = serializers.StringRelatedField()
+    cover_url = serializers.StringRelatedField()

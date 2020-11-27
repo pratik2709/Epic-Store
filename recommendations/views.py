@@ -1,36 +1,26 @@
 import itertools
 
 from django.db.models import Q
-from django.http import JsonResponse
 # create a login API for a user
-from rest_framework import viewsets, permissions, authentication
-from rest_framework.views import APIView
+from rest_framework import permissions, generics, authentication
+from rest_framework.response import Response
 
 from recommendations.models import Profile, Games
-from recommendations.serializers import ProfileSerializer, GamesSerializer
+from recommendations.serializers import RecommendationSerializer
 
 
-# Create your views here.
-# finds which user is logged in
-# write unoptimized query which returns data abased on age and attributes
-
-
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-class GamesViewSet(viewsets.ModelViewSet):
-    queryset = Games.objects.all()
-    serializer_class = GamesSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class RecommendationList(APIView):
+class RecommendationList(generics.ListCreateAPIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = RecommendationSerializer
+    http_method_names = ['get']
 
-    def get(self, request):
+    def list(self, request):
+        queryset = self.get_queryset(request)
+        serializer = RecommendationSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def get_queryset(self, request):
         user_object = request.user
         profile = Profile.objects.get(user=user_object)
         profile_preferences = profile.preferences
@@ -43,4 +33,17 @@ class RecommendationList(APIView):
         for theme, genre, violence in combinations:
             query = query | Q(theme=theme, genre=genre, violence=violence)
         res = games_by_age.filter(query)
-        return JsonResponse(list(res.values_list('name', flat=True)), safe=False)
+        return res
+
+# class ProfileViewSet(viewsets.ModelViewSet):
+#     queryset = Profile.objects.all()
+#     serializer_class = ProfileSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+#
+# class GamesViewSet(viewsets.ModelViewSet):
+#     queryset = Games.objects.all()
+#     serializer_class = GamesSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+
+
