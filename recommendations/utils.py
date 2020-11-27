@@ -11,7 +11,7 @@ class Utility:
         Games.objects.all().delete()
         for e in game_sheet.T.to_dict().values():
             age = int(''.join(filter(str.isdigit, e['Target Age Group'])))
-            violence = "Absent" if e['Game Category: Violence'] else e['Game Category: Violence']
+            violence = "Absent" if e['Game Category: Violence'] == 'None' else e['Game Category: Violence']
             Games.objects.create(name=e['Game Name'],
                                  cover_url=e['Cover URL'],
                                  age_group=age,
@@ -34,7 +34,6 @@ class Utility:
     def add_users(self, user_sheet):
         Profile.objects.all().delete()
         User.objects.all().exclude(username="admin").delete()
-        print(user_sheet.T.to_dict())
 
         for e in user_sheet.T.to_dict().values():
             attrs = Attributes.objects.all().first()
@@ -57,7 +56,7 @@ class Utility:
             result['violence'] = violence if result['violence'][0].lower() == val.lower() else result['violence']
             result['violence'] = ["Absent" if value == "None" else value for value in result['violence']]
 
-            print(e['Name'],result)
+            # print(e['Name'],result)
             user = User.objects.create_user(username=e['Name'],
                                             first_name=e['Name'],
                                             email=e['Name'].lower() + '@estore.com',
