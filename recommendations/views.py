@@ -1,22 +1,18 @@
 import itertools
-import json
 
-from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-
-# Create your views here.
-# finds which user is logged in
-# write unoptimized query which returns data abased on age and attributes
-
+from django.http import JsonResponse
 # create a login API for a user
-from rest_framework import viewsets, permissions, authentication, status
-from rest_framework.response import Response
+from rest_framework import viewsets, permissions, authentication
 from rest_framework.views import APIView
 
 from recommendations.models import Profile, Games
 from recommendations.serializers import ProfileSerializer, GamesSerializer
+
+
+# Create your views here.
+# finds which user is logged in
+# write unoptimized query which returns data abased on age and attributes
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
