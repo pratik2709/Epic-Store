@@ -45,6 +45,9 @@ the recommended games according to the user preferences
 this as per the discussion with Madhusudan 
 (can implement once I have a better understanding)
 
+## Security
+* Uses Django's inbuilt token mechanism to authenticate APIs
+
 ## Swagger
 * Login into swagger using the following url: http://localhost/swagger/
 * Use the 'api-token-auth' API to get the bearer key 
