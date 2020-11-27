@@ -3,14 +3,23 @@
 * This app uses docker and docker-compose
 * Create containers using:
 ```
-docker compose build
+docker-compose build
 ```
 * Run all database migrations with:
 ```
 sudo docker-compose run web python manage.py makemigrations
 ```
+* Once the containers are created, 
+data can be loaded with the following command:
+```
+sudo docker-compose run web python manage.py load_data
+``` 
+* Tests can be run using the following command:
+```
+sudo docker-compose run web python manage.py test
+```
 
-##Database
+## Database
 * Intially the plan was to use MongoDB. But it is not well supported 
 in the latest Django 3.1.0
 * So decided to go ahead with Postgres-SQL and make use of the JSONB field 
